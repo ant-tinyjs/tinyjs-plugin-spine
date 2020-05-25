@@ -1,0 +1,11 @@
+.idea
+.tmp
+node_modules
+.DS_Store
+npm-debug.log
+coverage
+dist
+docs
+/index.js
+/index.debug.js
+/main.js

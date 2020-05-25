@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>tinyjs-plugin-spine Demo</title>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no,email=no" name="format-detection"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+<style>
+html, body, p, div {margin:0;padding:0;}
+html, body {height:100%;width:100%;}
+</style>
+</head>
+<body>
+
+<script src="https://gw.alipayobjects.com/os/lib/tinyjs/tiny/1.3.1/tiny.debug.js"></script>
+<script src="../index.debug.js"></script>
+
+<script type="text/javascript">
+  // 新建 App
+  var app = new Tiny.Application({
+    // debug: true,
+    dpi: 2,
+    showFPS: true,
+    width: 500,
+    height: 500,
+    fixSize: true,
+    renderOptions: {
+      backgroundColor: 0x2a3145,
+    },
+  });
+
+  var spineInstance;
+  var loader = new Tiny.loaders.Loader();
+  var container = new Tiny.Container();
+  var onAssetsLoaded = function(loader, res) {
+    spineInstance = new Tiny.spine.Spine(res.spineRes.spineData);
+    container.addChild(spineInstance);
+
+    var localRect = spineInstance.getLocalBounds();
+
+    spineInstance.setPivot(container.width / 2, container.height / 2);
+    spineInstance.setPosition(Tiny.WIN_SIZE.width / 2 - localRect.x, Tiny.WIN_SIZE.height / 2 - localRect.y);
+    spineInstance.state.setAnimation(0, 'walk', true);
+
+    changeAnimation(container, spineInstance);
+  }
+
+  loader
+    .add({
+      name: 'spineRes',
+      url: './res/raptor/raptor.skel',
+      metadata: {
+        spineSkeletonScale: 0.5,
+      }
+    })
+    .load(onAssetsLoaded);
+  app.run(container);
+
+  // changeAnimation
+  function changeAnimation(container, spineInstance) {
+    var singleAnimations = ['gun-grab', 'gun-holster', 'jump', 'roar'];
+    var loopAnimations = ['walk'];
+    var allAnimations = [].concat(singleAnimations, loopAnimations);
+
+    container.setEventEnabled(true);
+    container.hitArea = new Tiny.Rectangle(0, 0, Tiny.WIN_SIZE.width, Tiny.WIN_SIZE.height);
+    container.on('pointerdown', function() {
+      var animation = '';
+      var currentAnimation = spineInstance.state.getCurrent(0).animation.name;
+
+      do {
+        animation = Tiny.randomFromArray(allAnimations);
+      } while (animation === currentAnimation);
+
+      console.log(animation);
+      spineInstance.skeleton.setToSetupPose();
+      spineInstance.state.setAnimation(0, animation, loopAnimations.indexOf(animation) !== -1);
+    });
+  }
+</script>
+</body>
+</html>

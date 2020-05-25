@@ -1,0 +1,75 @@
+{
+  "name": "tinyjs-plugin-spine",
+  "version": "1.0.0",
+  "author": "yiiqii",
+  "description": "Spine implementation for TinyJS",
+  "keywords": [
+    "tinyjs",
+    "plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ant-tinyjs/tinyjs-plugin-spine.git"
+  },
+  "main": "index.debug.js",
+  "files": [
+    "index.js",
+    "index.debug.js",
+    "main.js",
+    "src",
+    "demo",
+    "test"
+  ],
+  "scripts": {
+    "dev": "rollup -c --watch",
+    "prebuild": "rm -rf dist",
+    "build:debug": "rollup -c",
+    "build:prod": "rollup -c --environment BUILD:production",
+    "build:cjs": "rollup -c --environment BUILD:cjs",
+    "build": "npm run build:debug && npm run build:prod && npm run build:cjs",
+    "predoc": "rm -rf docs",
+    "doc": "jsdoc README.md src -r -d docs -t node_modules/docdash",
+    "lint": "eslint src test/unit/**/*.test.js",
+    "test": "mocha ./test/unit/**/*.test.js --recursive --require ./test/setup.js",
+    "ci": "npm run lint && npm run test",
+    "preversion": "npm run ci",
+    "postversion": "git push --tags",
+    "prepublish": "npm run build"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^3.5.0",
+    "docdash": "^0.4.0",
+    "eslint": "^5.6.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jsdoc": "3.5.5",
+    "mocha": "^5.0.0",
+    "rollup": "^0.65.2",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.1.6",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-progress": "^0.4.0",
+    "rollup-plugin-serve": "^0.4.2",
+    "rollup-plugin-uglify": "^3.0.0",
+    "sinon": "^4.2.2",
+    "sinon-chai": "^2.8.0"
+  },
+  "bugs": {
+    "url": "https://github.com/ant-tinyjs/tinyjs-plugin-spine/issues"
+  },
+  "homepage": "https://github.com/ant-tinyjs/tinyjs-plugin-spine#readme",
+  "dependencies": {
+    "tinyjs-plugin-mesh": "^1.3.0"
+  }
+}
