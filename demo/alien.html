@@ -47,8 +47,12 @@ html, body {height:100%;width:100%;}
     changeAnimation(container, spineInstance);
   }
 
+  // 初始化压缩纹理插件
+  Tiny.plugins.compressedTexture.init(app.renderer);
   loader
-    .add('spineRes', './res/alien/alien.json')
+    .add('spineRes', './res/alien/alien.json', {
+      metadata: { useCompressedTexture: true }
+    })
     .load(onAssetsLoaded);
   app.run(container);
 

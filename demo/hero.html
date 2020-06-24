@@ -57,9 +57,14 @@ html, body {height:100%;width:100%;}
         console.log('complete');
       },
       event: function(track, event) {
-			console.log("Event on track " + track.trackIndex + ": " + JSON.stringify(event));
-		}
+        console.log('Event on track ' + track.trackIndex + ': ' + JSON.stringify(event));
+      }
     });
+    spineInstance.state.tracks[0].listener = {
+      complete: function(track) {
+        console.log('my track completed ' + Math.floor(track.trackTime) + ' times');
+      }
+    };
 
     changeAnimation(container, spineInstance);
   }

@@ -30,6 +30,29 @@ http://tinyjs.net/plugins/tinyjs-plugin-spine.html#demo
 var spine = require('tinyjs-plugin-spine');
 // 或者
 // import spine from 'tinyjs-plugin-spine';
+
+var app = new Tiny.Application({
+  dpi: 2,
+  showFPS: true,
+});
+var loader = new Tiny.loaders.Loader();
+var container = new Tiny.Container();
+
+loader
+  .add('spineRes', 'https://gw.alipayobjects.com/zos/tiny/owl/1.0.7/assets/spine/coin.json')
+  .load(function() {
+    var spineInstance = new spine.Spine(res.spineRes.spineData);
+
+    container.addChild(spineInstance);
+
+    var localRect = spineInstance.getLocalBounds();
+
+    spineInstance.setPivot(container.width / 2, container.height / 2);
+    spineInstance.setPosition(Tiny.WIN_SIZE.width / 2 - localRect.x, Tiny.WIN_SIZE.height / 2 - localRect.y);
+    spineInstance.state.setAnimation(0, 'animation', true);
+  });
+
+app.run(container);
 ```
 
 ## 依赖
@@ -39,12 +62,14 @@ var spine = require('tinyjs-plugin-spine');
 
 http://tinyjs.net/plugins/tinyjs-plugin-spine.html#docs
 
+### loader 参数
+
 ``` js
 // loader params
 interface IMetadata {
   spineSkeletonScale?: number;  // 缩放
   spineAtlas?: any;
-  spineAtlasSuffix?: string;    // 如：.atlas（也是默认值）
+  spineAtlasSuffix?: string;    // 更改 atlas 文件的扩展名，如：.atlas（也是默认值）/.txt
   spineAtlasFile?: string;      // 使用自定义 atlas 文件链接，不使用和 .json 文件相对的拼接路径
   spineMetadata?: any;          // spine 自定义 metadata 属性值
   imageNamePrefix?: string;     // atlas 对应图片的文件名前缀，会拼接上 _atlas_page_，如：${name}_atlas_page_
@@ -54,4 +79,132 @@ interface IMetadata {
   imageMetadata?: any;
   image?: any;
 }
+```
+
+#### 设置骨骼的缩放
+
+``` js
+// 将以原尺寸的 0.5 倍渲染骨骼动画
+var loaderOptions = {
+  metadata: {
+    spineSkeletonScale: 0.5,
+  },
+}
+```
+
+#### 更改 atlas 文件扩展名
+
+``` js
+var loaderOptions = {
+  metadata: {
+    spineAtlasSuffix: '.txt',
+  },
+}
+
+// 对应的 atlas 文件是 coin.txt
+loader
+  .add('spineRes', './coin.json', loaderOptions)
+  .load(onAssetsLoaded);
+```
+
+
+### 使用压缩纹理
+
+此功能完整示例：`demo > alien.html`
+
+``` js
+var app = new Tiny.Application({
+  dpi: 2,
+  showFPS: true,
+});
+var loader = new Tiny.loaders.Loader();
+
+// 初始化压缩纹理插件
+Tiny.plugins.compressedTexture.init(app.renderer);
+loader
+  .add('spineRes', './res/alien/alien.json', {
+    // 设置使用压缩纹理
+    metadata: { useCompressedTexture: true }
+  })
+  .load(onAssetsLoaded);
+```
+
+
+### 更改 Texture
+
+``` js
+var spineInstance = new Tiny.spine.Spine(res.spineRes.spineData);
+var texture = Tiny.Texture.fromImage('./ant.png');
+
+spineInstance.hackTextureBySlotName('head', texture);
+
+spineInstance.hackTextureBySlotName('arm', texture, { width: 100, height : 100 });
+
+spineInstance.hackTextureBySlotIndex(7, texture, texture.orig || texture.frame);
+```
+
+### 预加载 json 和 atlas
+
+``` js
+var rawSkeletonData = JSON.parse('$jsonData');
+var rawAtlasData = '$atlasData';
+
+var spineAtlas = new Tiny.spine.TextureAtlas(rawAtlasData, function(line, callback) {
+    callback(Tiny.BaseTexture.fromImage(`./res/owl/${line}`));
+});
+
+var spineAtlasLoader = new Tiny.spine.AtlasAttachmentLoader(spineAtlas)
+var spineJSONParser = new Tiny.spine.SkeletonJSON(spineAtlasLoader);
+
+spineJSONParser.scale = 0.5;
+
+var spineData = spineJSONParser.readSkeletonData(rawSkeletonData);
+var spineInstance = new Tiny.spine.Spine(spineData);
+```
+
+### 一个 atlas 多个骨骼
+
+``` js
+var preLoader = new Tiny.loaders.Loader();
+var loader = new Tiny.loaders.Loader();
+
+preLoader.add('mainSpine', './res/owl/main.json');
+preLoader.load(() => {
+  var options = {
+    metadata: {
+      spineAtlas: preLoader.resources['mainSpine'].spineAtlas
+    }
+  };
+
+  loader
+    .add('tree', './res/owl/tree.json', options)
+    .add('bird', './res/owl/bird.json', options)
+    .load(onAssetsLoaded)
+});
+```
+
+### 事件
+
+``` js
+spineInstance.state.addListener({
+  start: function(track) {
+    console.log('start');
+  },
+  end: function(track) {
+    console.log('end');
+  },
+  complete: function(track) {
+    console.log('complete', Math.floor(track.trackTime) + ' times');
+  },
+  event: function(track, event) {
+    console.log('Event on track ' + track.trackIndex + ': ' + JSON.stringify(event));
+  },
+
+  dispose: function(track) {
+    console.log('animation was disposed at ' + track.trackIndex);
+  },
+  interrupted: function(track) {
+    console.log('animation was interrupted at ' + track.trackIndex);
+  }
+});
 ```
