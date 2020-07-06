@@ -1,6 +1,6 @@
 {
   "name": "tinyjs-plugin-spine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "yiiqii",
   "description": "Spine implementation for TinyJS",
   "keywords": [
@@ -70,6 +70,6 @@
   },
   "homepage": "https://github.com/ant-tinyjs/tinyjs-plugin-spine#readme",
   "dependencies": {
-    "tinyjs-plugin-mesh": "^1.3.0"
+    "tinyjs-plugin-mesh": "^1.3.1"
   }
 }
