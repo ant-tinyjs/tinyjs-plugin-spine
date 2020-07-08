@@ -75,9 +75,9 @@ interface IMetadata {
   imageNamePrefix?: string;     // atlas 对应图片的文件名前缀，会拼接上 _atlas_page_，如：${name}_atlas_page_
   atlasRawData?: string;
   imageLoader?: any;
-  images?: any;
+  images?: object<string, Tiny.Texture>;
   imageMetadata?: any;
-  image?: any;
+  image?: Tiny.Texture;
 }
 ```
 
@@ -107,6 +107,57 @@ loader
   .load(onAssetsLoaded);
 ```
 
+#### 手动设置纹理图
+
+``` js
+loader
+  .add({
+    name: 'spineRes',
+    url: './dragon.json',
+    metadata: {
+      // 单张纹理图
+      image: Tiny.Texture.fromImage('https://xxx/dragon.png'),
+      // 多张纹理图
+      images: {
+        // key 就是 atlas 图集里的图片路径名
+        'dragon.png': Tiny.Texture.fromImage('https://xxx/dragon.png'),
+        'dragon2.png': Tiny.Texture.fromImage('https://xxx/dragon2.png'),
+      },
+    }
+  });
+```
+
+#### 定制纹理图片加载器
+
+``` js
+const imageMap = {
+  'dragon.png': 'https://xxx/dragon.png',
+  'dragon2.png': 'https://xxx/dragon2.png'
+};
+
+loader
+  .add({
+    name: 'spineRes',
+    url: './res/dragon/dragon.json',
+    metadata: {
+      imageLoader: (loader, namePrefix, baseUrl, imageOptions) => {
+        return function(line, callback) {
+          const name = namePrefix + line;
+          const url = imageMap[line];
+
+          loader.add(name, url, imageOptions, resource => {
+            if (!resource.error) {
+              callback(resource.texture.baseTexture);
+            } else {
+              // polyfill or show error
+              callback(null);
+            }
+          });
+        }
+      }
+    }
+  });
+```
 
 ### 使用压缩纹理
 

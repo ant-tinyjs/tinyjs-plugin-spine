@@ -47,12 +47,33 @@ html, body {height:100%;width:100%;}
     spineInstance.state.setAnimation(0, 'flying', true);
   }
 
+  // 为演示功能，使用图片纹理加载器
+  const imageMap = {
+    'dragon.png': './res/dragon/dragon.png',
+    'dragon2.png': './res/dragon/dragon2.png'
+  };
+
   loader
     .add({
       name: 'spineRes',
       url: './res/dragon/dragon.json',
       metadata: {
         spineSkeletonScale: 0.8,
+        imageLoader: (loader, namePrefix, baseUrl, imageOptions) => {
+          return function(line, callback) {
+            const name = namePrefix + line;
+            const url = imageMap[line];
+
+            loader.add(name, url, imageOptions, resource => {
+              if (!resource.error) {
+                callback(resource.texture.baseTexture);
+              } else {
+                // polyfill or show error
+                callback(null);
+              }
+            });
+          }
+        }
       }
     })
     .load(onAssetsLoaded);

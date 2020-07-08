@@ -53,6 +53,8 @@ html, body {height:100%;width:100%;}
       url: './res/goblins/goblins.json',
       metadata: {
         spineSkeletonScale: 1.5,
+        // 演示功能，手动设置纹理图
+        image: Tiny.Texture.fromImage('https://gw.alipayobjects.com/zos/tiny/owl/1.0.7/assets/spine/goblins.png'),
       }
     })
     .load(onAssetsLoaded);
