@@ -1,0 +1,34 @@
+
+rotating-diamond-pro.png
+size: 635,266
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+lower-side
+  rotate: true
+  xy: 479, 113
+  size: 153, 156
+  orig: 155, 157
+  offset: 1, 0
+  index: -1
+top
+  rotate: false
+  xy: 0, 0
+  size: 307, 266
+  orig: 308, 267
+  offset: 1, 0
+  index: -1
+upper-side
+  rotate: false
+  xy: 479, 1
+  size: 155, 110
+  orig: 155, 110
+  offset: 0, 0
+  index: -1
+upper-side-gradient
+  rotate: true
+  xy: 309, 29
+  size: 237, 168
+  orig: 237, 168
+  offset: 0, 0
+  index: -1
