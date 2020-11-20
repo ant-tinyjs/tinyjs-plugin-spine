@@ -136,6 +136,7 @@ class Spine extends Tiny.Container {
       const slot = this.skeleton.slots[i];
       const attachment = slot.getAttachment();
       const slotContainer = this.newContainer();
+      slotContainer.name = slot.data.name;
 
       this.slotContainers.push(slotContainer);
       this.addChild(slotContainer);
@@ -592,6 +593,7 @@ class Spine extends Tiny.Container {
     sprite.position.x = attachment.x;
     sprite.position.y = attachment.y;
     sprite.alpha = attachment.color.a;
+    sprite.name = defName;
 
     sprite.region = attachment.region;
     this.setSpriteRegion(attachment, sprite, attachment.region);
@@ -630,6 +632,7 @@ class Spine extends Tiny.Container {
     strip.canvasPadding = 1.5;
     strip.alpha = attachment.color.a;
     strip.region = attachment.region;
+    strip.name = attachment.name;
     this.setMeshRegion(attachment, strip, region);
 
     slot.meshes = slot.meshes || {};
