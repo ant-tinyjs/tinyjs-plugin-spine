@@ -1,6 +1,6 @@
 {
   "name": "tinyjs-plugin-spine",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "yiiqii",
   "description": "Spine implementation for TinyJS",
   "keywords": [
@@ -21,7 +21,7 @@
     "test"
   ],
   "scripts": {
-    "dev": "rollup -c --watch -m",
+    "dev": "rollup -c -m --watch",
     "prebuild": "rm -rf dist",
     "build:debug": "rollup -c",
     "build:prod": "rollup -c --environment BUILD:production",

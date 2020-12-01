@@ -8,7 +8,7 @@ let tempRgb = [0, 0, 0];
 /**
  * @class
  * @memberof Tiny.spine
- * @extends Tiny.Spine
+ * @extends Tiny.Sprite
  */
 class SpineSprite extends Tiny.Sprite {
   /**
@@ -136,8 +136,8 @@ class Spine extends Tiny.Container {
       const slot = this.skeleton.slots[i];
       const attachment = slot.getAttachment();
       const slotContainer = this.newContainer();
-      slotContainer.name = slot.data.name;
 
+      slotContainer.name = slot.data.name;
       this.slotContainers.push(slotContainer);
       this.addChild(slotContainer);
       this.tempClipContainers.push(null);

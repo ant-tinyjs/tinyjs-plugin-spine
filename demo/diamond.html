@@ -22,11 +22,9 @@ html, body {height:100%;width:100%;}
   var app = new Tiny.Application({
     dpi: 2,
     showFPS: true,
-    // width: 320,
-    // height: 568,
-    // fixSize: true,
-    // renderType: Tiny.RENDERER_TYPE.WEBGL,
-    renderType: Tiny.RENDERER_TYPE.CANVAS,
+    width: 500,
+    height: 500,
+    fixSize: true,
     renderOptions: {
       backgroundColor: 0x2a3145,
     },
@@ -45,11 +43,12 @@ html, body {height:100%;width:100%;}
     spineInstance.setPivot(container.width / 2, container.height / 2);
     spineInstance.setPosition(Tiny.WIN_SIZE.width / 2 - localRect.x, Tiny.WIN_SIZE.height / 2 - localRect.y);
 
-    const animation = spineInstance.skeleton.data.animations[0];
+    var animation = spineInstance.skeleton.data.animations[0];
+
     if (animation) {
       spineInstance.state.setAnimation(0, animation.name);
     }
-  
+
     container.setEventEnabled(true);
     container.hitArea = new Tiny.Rectangle(0, 0, Tiny.WIN_SIZE.width, Tiny.WIN_SIZE.height);
     container.on('pointerdown', () => {
@@ -57,11 +56,12 @@ html, body {height:100%;width:100%;}
     });
   }
 
-  let animationIndex = 1;
+  var animationIndex = 1;
   function setAnimation(spineInstance) {
-    const animations = spineInstance.skeleton.data.animations;
-    const animation = animations[animationIndex];
-    const name = animation.name;
+    var animations = spineInstance.skeleton.data.animations;
+    var animation = animations[animationIndex];
+    var name = animation.name;
+
     console.log(animationIndex, name);
     spineInstance.state.setAnimation(0, name, false);
 
@@ -73,7 +73,7 @@ html, body {height:100%;width:100%;}
   }
 
   loader
-    .add('spineRes', './res/diamond/rotating-diamond-pro.json')
+    .add('spineRes', './res/diamond/rotating-diamond.json')
     .load(onAssetsLoaded);
   app.run(container);
 </script>
