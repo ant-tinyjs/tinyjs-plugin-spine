@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>tinyjs-plugin-spine Player</title>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no,email=no" name="format-detection"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+<link href="https://gw.alipayobjects.com/as/g/antui/antui/10.1.32/dpl/antui.css" rel="stylesheet"/>
+<link href="https://gw.alipayobjects.com/as/g/antui/antui/10.1.32/dpl/widget/switch.css" rel="stylesheet"/>
+<link rel="stylesheet" href="./libs/spine-player.css">
+<link rel="stylesheet" href="./index.css">
+<script src="./libs/loader.js"></script>
+<script src="./libs/spine-player.js"></script>
+<script>
+  window.__OFFICIAL__ = true;
+</script>
+</head>
+<body>
+<div class="am-flexbox main" id="J-main">
+  <div class="player-container" id="J-playerContainer"></div>
+  <div class="subset am-wingblank wb10px">
+    <div class="am-list">
+      <div class="am-list-item">
+        <div class="am-list-content">运行时</div>
+        <div class="am-list-item-actions">
+          <a class="am-button tiny-blue" href="javascript:void(0)">Spine 官方</a>
+          <a class="am-button tiny" href="./index.html">TinyJS 插件</a>
+        </div>
+      </div>
+      <div class="am-list-item">
+        <div class="am-list-content">是否开启 premultipliedAlpha</div>
+        <div class="am-switch">
+          <input type="checkbox" class="am-switch-checkbox" id="J-premultipliedAlphaCheckbox">
+          <label class="am-switch-label" for="J-premultipliedAlphaCheckbox">
+            <div class="am-switch-inner"></div>
+            <div class="am-switch-switch"></div>
+          </label>
+        </div>
+      </div>
+      <div class="am-list-item">
+        <div class="am-list-item-actions">
+          <button class="am-button tiny" id="J-chooseFilesBtn">选择预览资源</button>
+        </div>
+        <div class="am-list-brief">&nbsp;&nbsp;格式：.skel/.json，.atlas 和 .png</div>
+      </div>
+      <div class="am-list-item">
+        <div class="am-list-content" id="J-fileLinkList"></div>
+      </div>
+    </div>
+  </div>
+  <div class="am-flexbox-item"></div>
+</div>
+<script src="./index.js"></script>
+</body>
+</html>

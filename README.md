@@ -201,10 +201,10 @@ var rawSkeletonData = JSON.parse('$jsonData');
 var rawAtlasData = '$atlasData';
 
 var spineAtlas = new Tiny.spine.TextureAtlas(rawAtlasData, function(line, callback) {
-    callback(Tiny.BaseTexture.fromImage(`./res/owl/${line}`));
+  callback(Tiny.BaseTexture.fromImage(`./res/owl/${line}`));
 });
 
-var spineAtlasLoader = new Tiny.spine.AtlasAttachmentLoader(spineAtlas)
+var spineAtlasLoader = new Tiny.spine.AtlasAttachmentLoader(spineAtlas);
 var spineJSONParser = new Tiny.spine.SkeletonJSON(spineAtlasLoader);
 
 spineJSONParser.scale = 0.5;

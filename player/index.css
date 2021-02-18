@@ -1,0 +1,14 @@
+.main {
+  height: 100vh;
+  flex-direction: column;
+}
+
+.main>.player-container,
+.main>.subset {
+  width: 100%;
+}
+
+.player-container {
+  height: 488px;
+  background-color: black;
+}
