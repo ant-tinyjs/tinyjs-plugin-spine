@@ -14,20 +14,20 @@ var spineGenerator;
       var pngs = 0;
 
       for (var i = 0; i < files.length; i++) {
-        var file = files[i].name.toLowerCase();
-        if (file.endsWith('.skel')) {
+        var file = files[i].name;
+        if (/\.skel$/.test(file)) {
           skels++;
           skelFile = file;
         }
-        if (file.endsWith('.json')) {
+        if (/\.json$/.test(file)) {
           jsons++;
           jsonFile = file;
         }
-        if (file.endsWith('.atlas')) {
+        if (/\.atlas$/.test(file)) {
           atlases++;
           atlasFile = file;
         }
-        if (file.endsWith('.png')) pngs++;
+        if (/\.png$/.test(file)) pngs++;
       }
 
       if ((skels === 0 && jsons === 0) || (skels !== 0 && jsons !== 0) || skels > 1 || jsons > 1) {
