@@ -1044,6 +1044,25 @@ var spine;
     };
     SpinePlayer.prototype.setupInput = function() {
       var _this = this;
+      var canvas = this.canvas;
+      var input = new Input(canvas);
+      var target = null;
+      input.addListener({
+        up: function (x, y) {
+          if (target) {
+            target = null;
+          } else {
+            if (!_this.config.showControls) {
+              return;
+            }
+            if (_this.paused) {
+              _this.play();
+            } else {
+              _this.pause();
+            }
+          }
+        },
+      });
       var mouseOverControls = true;
       var mouseOverCanvas = false;
       document.addEventListener('mousemove', function(ev) {
